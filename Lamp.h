@@ -6,22 +6,13 @@
 #include "GameFramework/Actor.h"
 #include "Containers/Array.h"
 #include "Components/LightComponent.h"
+#include "Components/TimelineComponent.h"
 #include "Lamp.generated.h"
 
-UENUM(BlueprintType)
-enum class LumensType : uint8 {
-	NoLumen UMETA(DisplayName = "NoLumen"),
-	Bulb450 UMETA(DisplayName = "Bulb450"),
-	Bulb800 UMETA(DisplayName = "Bulb800"),
-	Bulb1100 UMETA(DisplayName = "Bulb1100"),
-	Bulb1600 UMETA(DisplayName = "Bulb1600"),
-	Bulb2600 UMETA(DisplayName = "Bulb2600"),
-	Bulb5800 UMETA(DisplayName = "Bulb5800")
-};
 
 
-UCLASS(Blueprintable)
-class UE5_INICIAL_API ALamp : public AActor
+UCLASS()
+class PENTAKILL_CHARACTER_API ALamp : public AActor
 {
 	GENERATED_BODY()
 	
@@ -29,31 +20,46 @@ public:
 	// Sets default values for this actor's properties
 	ALamp();
 	UFUNCTION(BlueprintCallable, Category = "Control Lamp")
-	void LightOn();
+		void Init();
 	UFUNCTION(BlueprintCallable, Category = "Control Lamp")
-	void LightOff();
+		void LightOn();
+	void InterpolateIntensity(float FValue);
 	UFUNCTION(BlueprintCallable, Category = "Control Lamp")
-	void Flirck();
+		void LightOff();
 	UFUNCTION(BlueprintCallable, Category = "Control Lamp")
-		float GetLumenByType();
-
-
+		void Flirck();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	UMaterialInstanceDynamic* InstanceMaterial;
+	TArray<ULightComponent*> LightsLamp;
+	TArray<float> InicialIntesitys;
+
+private:
+	float timeValue;
+	float TimelineValue;
+	FTimeline MyTimline;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* LampMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control Lamp")
-		TArray<ULightComponent*> LightsLamp;
+		int32 IndexOfMaterial; 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control Lamp")
-		float IntensityOn;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-		LumensType lumensLamp;
+		float emissionIntensity;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Control Lamp")
+		FName emissionParamName;
+	UPROPERTY(EditDefaultsOnly, Category = Curve)
+		UCurveFloat* CurveOn;
+	UPROPERTY(EditDefaultsOnly, Category = Curve)
+		UCurveFloat* CurveOff;
+	UPROPERTY(EditDefaultsOnly, Category = Curve)
+		UCurveFloat* CurveFlick;
+
+
 
 };

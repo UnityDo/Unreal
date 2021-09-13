@@ -8,9 +8,7 @@ ALamp::ALamp()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	IntensityOn= 3000.0f;
-	lumensLamp = LumensType::Bulb450;
-	LampMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Lamp"));
+    LampMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Lamp"));
 
 }
 
@@ -18,70 +16,110 @@ ALamp::ALamp()
 void ALamp::BeginPlay()
 {
 	Super::BeginPlay();
-	
+    //Crea el mesh de la lampara
+    
+   
+    
+
+    Init();
 }
 
 // Called every frame
 void ALamp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+   
 
+   
 }
 void ALamp::LightOn() {
+
+    FOnTimelineFloat progressFunction{};
+    int index = 0;
     for (ULightComponent* TemporalLight : LightsLamp)
     {
-        TemporalLight->SetIntensity(GetLumenByType());
+        TemporalLight->SetIntensity(InicialIntesitys[index]);
+        index++;
+    }
+    if (InstanceMaterial != nullptr)
+    {
+        InstanceMaterial->SetScalarParameterValue(emissionParamName, emissionIntensity);
+        LampMesh->SetMaterial(IndexOfMaterial, InstanceMaterial);
+    }
+    else {
+        UE_LOG(LogTemp, Warning, L"null");
     }
 
+    //Enciden basado en curve
+   // CurveOn->GetFloatValue(DeltaSeconds)
+   /*
+    progressFunction.BindUFunction(this, "InterpolateIntensity");
+    MyTimline.AddInterpFloat(CurveOn, progressFunction, FName{ TEXT("BlendIntensity") });
+    MyTimline.PlayFromStart();*/
 }
+void ALamp::InterpolateIntensity(float FValue)
+{
+    float StartIntesity = 0.0f;
+    float FinalIntesity = 1.0f;
+    float LastIntesity = 0.0f;
+    
+    LastIntesity = FMath::Lerp(StartIntesity, FinalIntesity, FValue);
+    if (InstanceMaterial != nullptr)
+    {
+        InstanceMaterial->SetScalarParameterValue(emissionParamName, LastIntesity);
+        LampMesh->SetMaterial(IndexOfMaterial, InstanceMaterial);
+    }
+    else {
+        UE_LOG(LogTemp, Warning, L"null");
+    }
+
+  
+}
+
 void ALamp::LightOff() {
 
     for (ULightComponent* TemporalLight : LightsLamp)
     {
         TemporalLight->SetIntensity(0.0f);
     }
-    
-
+    if (InstanceMaterial != nullptr)
+    {
+        InstanceMaterial->SetScalarParameterValue(emissionParamName, 0);
+        LampMesh->SetMaterial(IndexOfMaterial, InstanceMaterial);
+    }
+    else {
+        UE_LOG(LogTemp, Warning, L"null");
+    }
+ 
 }
 void ALamp::Flirck() {
 
 }
+void ALamp::Init() {
+    //Configuracion inicial
+    //Almacena todas las luces
+    //Almacena sus valores inciales de intesity
+   
+ 
+ TArray<UActorComponent*> TemporalComponents;
+ this->GetComponents(ULightComponent::StaticClass(), TemporalComponents, false);
 
-float ALamp::GetLumenByType()
-{
-    float intesity = 0;
-    switch (lumensLamp)
-    {
-    case LumensType::NoLumen:
-        intesity = 0;
-        break;
-    case LumensType::Bulb450:
-        intesity = 450;
-        break;
-    case LumensType::Bulb800:
-        intesity = 800;
-        break; 
-    case LumensType::Bulb1100:
-            intesity = 1100;
-            break;
-    case LumensType::Bulb1600:
-                intesity = 1600;
-                break;
-    case LumensType::Bulb2600:
-        intesity = 2600;
-        break;
+        for (UActorComponent* TemporalLight : TemporalComponents)
+            {
+            ULightComponent* light = Cast<ULightComponent>(TemporalLight);
+             LightsLamp.Add(light);
+             InicialIntesitys.Add(light->Intensity);
+             UE_LOG(LogTemp, Log, TEXT("Found UObject named: %s"), *light->GetName());
+         }
 
-    case LumensType::Bulb5800:
-        intesity = 5800;
-        break;
-
-
-
-    default: break;
-    }
-
-
-	return intesity;
+        //Crea copia del material con emission    
+        if (LampMesh != nullptr) {
+          
+            InstanceMaterial=  UMaterialInstanceDynamic::Create(LampMesh->GetMaterial(IndexOfMaterial), this);
+           
+        }
+        else {
+            UE_LOG(LogTemp, Warning, L"null");
+        }
 }
-
 

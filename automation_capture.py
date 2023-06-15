@@ -1,7 +1,7 @@
 import unreal
 
 capture = unreal.AutomatedLevelSequenceCapture()
-capture.level_sequence_asset = unreal.LevelSequence'Game/Cinematics/Takes/MySequence.MySequence'
+capture.level_sequence_asset =capture.level_sequence_asset = "/Game/Cinematics/Takes/MySequence.MySequence"
 capture.shot_name = 'MyShot'
 capture.use_custom_start_frame = True
 capture.custom_start_frame = 10

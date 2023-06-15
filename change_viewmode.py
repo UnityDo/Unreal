@@ -1,1 +1,2 @@
-unreal.ViewModeIndex
+import unreal
+unreal.AutomationLibrary.set_editor_viewport_view_mode(unreal.ViewModeIndex.VMI_COLLISION_PAWN)

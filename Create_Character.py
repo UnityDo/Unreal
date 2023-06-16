@@ -25,5 +25,5 @@ blueprint_name_controller = "AI_Personaje1"
 blueprint_path_controller = "/Game/Blueprints/NPC"
 
 # Crear el Blueprint
-new_blueprint = unreal.AssetToolsHelpers.get_asset_tools().create_asset(blueprint_name_controller , blueprint_path_controller, unreal.Blueprint, blueprint_factory)
+new_blueprint = unreal.AssetToolsHelpers.get_asset_tools().create_asset(blueprint_name_controller , blueprint_path_controller, unreal.Blueprint, blueprint_factory_controller )
 

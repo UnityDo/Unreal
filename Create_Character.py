@@ -41,7 +41,7 @@ blueprint_path_controller = "/Game/Blueprints/NPC"
 new_blueprint = unreal.AssetToolsHelpers.get_asset_tools().create_asset(blueprint_name_controller , blueprint_path_controller, unreal.Blueprint, blueprint_factory_controller)
 
 
-
+blueprint_factory_behavior = unreal.BehaviorTreeFactory()
 # Obtener la instancia de Asset Tools
 asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
 

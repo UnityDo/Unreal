@@ -46,6 +46,6 @@ blueprint_factory_behavior = unreal.BehaviorTreeFactory()
 asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
 
 # Crear un nuevo Behavior Tree
-behavior_tree = asset_tools.create_asset("BTT_Personaje", "/Game/Blueprints/NPC", unreal.BehaviorTree, blueprint_factory_controller)
+behavior_tree = asset_tools.create_asset("BTT_Personaje", "/Game/Blueprints/NPC", unreal.BehaviorTree, blueprint_factory_behavior)
 
 

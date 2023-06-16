@@ -57,16 +57,17 @@ blueprint_factory_blackboard = unreal.BlackboardDataFactory()
 asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
 
 # Crear un nuevo Behavior Tree
-behavior_tree = asset_tools.create_asset("BBD_Personaje", "/Game/Blueprints/NPC", unreal.BlackboardData, blueprint_factory_blackboard)
+blackboard = asset_tools.create_asset("BBD_Personaje", "/Game/Blueprints/NPC", unreal.BlackboardData, blueprint_factory_blackboard)
+Distanciakey=unreal.BlackboardEntry
+Distanciakey.entry_name="DistanceToPlayer"
+Distanciakey.key_type=unreal.BlackboardKeyType_Float
+blackboard.keys.append(Distanciakey)
+
 
 #Crea un Enviroment Query
 
+# Solo hay metodo de EnviromentQueryFactory en la documentacion no se especifica la clase EnvironmentQuery ya q forma parte de un plugin
+#  blueprint_factory_EQ = unreal.EnvironmentQueryFactory()
 
-blueprint_factory_EQ = unreal.EnvironmentQueryFactory()
-# Obtener la instancia de Asset Tools
-asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
-
-# Crear un nuevo Behavior Tree
-behavior_tree = asset_tools.create_asset("EQ_Personaje", "/Game/Blueprints/NPC", unreal.EnvironmentQuery, blueprint_factory_EQ)
 
 

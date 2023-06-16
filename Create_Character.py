@@ -67,6 +67,6 @@ blueprint_factory_EQ = unreal.EnvironmentQueryFactory()
 asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
 
 # Crear un nuevo Behavior Tree
-behavior_tree = asset_tools.create_asset("EQ_Personaje", "/Game/Blueprints/NPC", unreal.BlackboardData, blueprint_factory_EQ)
+behavior_tree = asset_tools.create_asset("EQ_Personaje", "/Game/Blueprints/NPC", unreal.EnvironmentQuery, blueprint_factory_EQ)
 
 

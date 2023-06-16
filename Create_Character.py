@@ -58,8 +58,8 @@ asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
 
 # Crear un nuevo Behavior Tree
 blackboard = asset_tools.create_asset("BBD_Personaje", "/Game/Blueprints/NPC", unreal.BlackboardData, blueprint_factory_blackboard)
-Distanciakey=unreal.BlackboardEntry
-Distanciakey.entry_name="DistanceToPlayer"
+Distanciakey=unreal.BlackboardEntry()
+Distanciakey.entry_name("DistanceToPlayer")
 Distanciakey.key_type=unreal.BlackboardKeyType_Float
 blackboard.keys.append(Distanciakey)
 

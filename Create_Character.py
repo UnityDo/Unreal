@@ -25,5 +25,27 @@ blueprint_name_controller = "AI_Personaje1"
 blueprint_path_controller = "/Game/Blueprints/NPC"
 
 # Crear el Blueprint
-new_blueprint = unreal.AssetToolsHelpers.get_asset_tools().create_asset(blueprint_name_controller , blueprint_path_controller, unreal.Blueprint, blueprint_factory_controller )
+new_blueprint = unreal.AssetToolsHelpers.get_asset_tools().create_asset(blueprint_name_controller , blueprint_path_controller, unreal.Blueprint, blueprint_factory_controller)
+
+
+#Crea un Behaviour Tree
+
+blueprint_factory_controller = unreal.BlueprintFactory()
+blueprint_factory_controller.set_editor_property("parent_class", unreal.AIController)
+
+# Establecer el nombre y la ruta del Blueprint
+blueprint_name_controller = "AI_Personaje1"
+blueprint_path_controller = "/Game/Blueprints/NPC"
+
+# Crear el Blueprint
+new_blueprint = unreal.AssetToolsHelpers.get_asset_tools().create_asset(blueprint_name_controller , blueprint_path_controller, unreal.Blueprint, blueprint_factory_controller)
+
+
+
+# Obtener la instancia de Asset Tools
+asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
+
+# Crear un nuevo Behavior Tree
+behavior_tree = asset_tools.create_asset("BTT_Personaje", "/Game/Blueprints/NPC", unreal.BehaviorTree, blueprint_factory_controller)
+
 

@@ -52,12 +52,21 @@ behavior_tree = asset_tools.create_asset("BTT_Personaje", "/Game/Blueprints/NPC"
 
 #Crea un Blackboard
 
-blueprint_factory_behavior = unreal.BehaviorTreeFactory()
+blueprint_factory_blackboard = unreal.BlackboardDataFactory()
 # Obtener la instancia de Asset Tools
 asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
 
 # Crear un nuevo Behavior Tree
-behavior_tree = asset_tools.create_asset("BTT_Personaje", "/Game/Blueprints/NPC", unreal.BehaviorTree, blueprint_factory_behavior)
+behavior_tree = asset_tools.create_asset("BBD_Personaje", "/Game/Blueprints/NPC", unreal.BlackboardData, blueprint_factory_blackboard)
 
+#Crea un Enviroment Query
+
+
+blueprint_factory_EQ = unreal.EnvironmentQueryFactory()
+# Obtener la instancia de Asset Tools
+asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
+
+# Crear un nuevo Behavior Tree
+behavior_tree = asset_tools.create_asset("EQ_Personaje", "/Game/Blueprints/NPC", unreal.BlackboardData, blueprint_factory_EQ)
 
 

@@ -11,6 +11,6 @@ camera_rotation = viewport.get_view_rotation()
 camera = unreal.CineCameraActor(viewport.get_viewport_world())
 camera.set_actor_location(camera_location)
 camera.set_actor_rotation(camera_rotation)
-
+file_path = "/Game/Screenshots/screenshot.png"
 # Hacer una captura de la cámara creada
-unreal.AutomationLibrary.take_high_res_screenshot(1920, 1080, "screenshot.png", camera=camera)
+unreal.AutomationLibrary.take_high_res_screenshot(1920, 1080, file_path, camera=camera)

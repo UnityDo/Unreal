@@ -1,0 +1,12 @@
+	bool bestaVivo = true;
+	uint8 canalRojo = 255; 
+	int32 vida = 42;
+	int64 dinero = 123456789;
+	float distancia = 3.14f;
+	FName nombre = FName(TEXT("Jugador"));
+	FString cadena = FString(TEXT("Texto suelto"));
+	FText Texto = FText::FromString(TEXT("Texto localizado"));
+	FVector Localizacion= FVector(0.0f,0.0f,0.0f);
+	FRotator Rotacion= FRotator(0.0f, 0.0f, 0.0f);
+	FTransform Posicionador = FTransform::Identity;
+	

@@ -15,9 +15,22 @@ else:
     event_track = sequencer.add_master_track(unreal.MovieSceneEventTrack)
     event_track.set_display_name("ActivaSonido")
 
-    # Agregar una sección al evento de pista
-event_trigger=unreal.MovieSceneEventTrackExtensions.add_event_trigger_section(event_track)
-     event_trigger.set_display_name("Event Captions")
+  # Agregar una sección al evento de pista
+    section = event_track.add_event_trigger_section()
+    section.set_start_frame_seconds(0)
+
+   # Buscar o crear un canal de eventos
+    event_channel = None
+    for channel in section.get_channels():
+        if isinstance(channel, unreal.MovieSceneScriptingEventChannel):
+            event_channel = channel
+            break
+
+    if not event_channel:
+        event_channel = section.add_channel(unreal.MovieSceneScriptingEventChannel)
+        key = event_channel.add_key(unreal.FrameNumber(0))
+        key.set_event_name("ActivaSonido")
+    
 
 
 

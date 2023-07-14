@@ -1,0 +1,87 @@
+import unreal
+import re
+
+class Subtitle:
+    def __init__(self, id, start, end, text):
+        self.id = id
+        self.start = start
+        self.end = end
+        self.text = text
+
+def read_srt(file_path):
+    subtitles = []
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+        i = 0
+        while i < len(lines):
+            # Leer el ID del subtítulo
+            id = int(lines[i].strip())
+            i += 1
+
+            # Leer el tiempo de inicio y fin del subtítulo
+            start_end_match = re.match(r'(\d{2}:\d{2}:\d{2},\d{3}) --> (\d{2}:\d{2}:\d{2},\d{3})', lines[i])
+            start = start_end_match.group(1)
+            end = start_end_match.group(2)
+            i += 1
+
+            # Leer el texto del subtítulo
+            text = ""
+            while i < len(lines) and lines[i].strip() != "":
+                text += lines[i]
+                i += 1
+
+            # Crear una instancia de la clase Subtitle y agregarla a la lista
+            subtitle = Subtitle(id, start, end, text)
+            subtitles.append(subtitle)
+
+            # Saltar líneas vacías
+            while i < len(lines) and lines[i].strip() == "":
+                i += 1
+
+    return subtitles
+for subtitle in subtitles:
+    print(f"ID: {subtitle.id}")
+    print(f"Start: {subtitle.start}")
+    print(f"End: {subtitle.end}")
+    print(f"Text: {subtitle.text}")
+
+# Construir la ruta completa al archivo
+project_dir = unreal.Paths.project_content_dir()
+file_path = project_dir + "/Data/PruebaSub.srt"
+
+# Abrir el archivo y leer su contenido
+with open(file_path, 'r') as file:
+    srt_data = file.read()
+
+
+# Parsear el archivo SRT 
+subtitles = read_srt(file_path)
+
+
+
+
+
+# Obtener el Sequencer
+level_sequence = unreal.EditorAssetLibrary.load_asset("/Game/Sequencer/Test/SQ_Sincro_Captions.SQ_Sincro_Captions")
+
+event_track = level_sequence.add_master_track(unreal.MovieSceneEventTrack)
+event_track.set_display_name("ActivaSonido")
+
+tracks = unreal.MovieSceneSequenceExtensions.find_master_tracks_by_type(level_sequence,unreal.MovieSceneEventTrack)
+
+ # Agregar una sección al evento de pista
+section = event_track.add_event_trigger_section()
+section.set_start_frame_seconds(0)
+
+ # Buscar o crear un canal de eventos
+event_channel = None
+for channel in section.get_channels():
+  if isinstance(channel, unreal.MovieSceneScriptingEventChannel):
+    event_channel = channel
+    break
+
+  if not event_channel:
+        event_channel = event_track.add_channel(unreal.MovieSceneScriptingEventChannel)
+
+# Agregar un evento al canal de eventos
+key = event_channel.add_key(unreal.FrameNumber(0), unreal.MovieSceneEvent())

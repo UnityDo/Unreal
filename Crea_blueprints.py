@@ -7,9 +7,7 @@ def make_blueprint_small(asset_name, package_path):
     # Crear el Blueprint
     asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
     blueprint = asset_tools.create_asset(asset_name, package_path, None, factory)
-    
-    # Agregar componentes al Blueprint
-    root_component = blueprint.simple_construct_default_scene_root()    
+ 
     # Guardar el Blueprint
     unreal.EditorAssetLibrary.save_asset(package_path + "/" + asset_name)
 

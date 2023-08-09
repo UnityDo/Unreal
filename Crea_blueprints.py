@@ -1,7 +1,6 @@
 import unreal
 
-def make_blueprint_small(asset_name):
-    package_path = "/Game/Blueprints/Interactives/Puzzles/Automatons/"
+def make_blueprint_small(asset_name, package_path):
     factory = unreal.BlueprintFactory()
     factory.set_editor_property("parent_class", unreal.Actor)
     
@@ -17,12 +16,15 @@ def make_blueprint_small(asset_name):
 # Nombres de los Blueprints
 blueprint_names = ["Devil", "Justice", "Magician", "Priestess", "Death"]
 
+# Carpeta donde se guardarán los Blueprints
+package_path = "/Game/Blueprints/Interactives/Puzzles/Automatons/"
+
 # Recorrer los nombres y crear los Blueprints
 for name in blueprint_names:
     # Nombre del Blueprint
     blueprint_name = f"BP_Body_{name}"
     
     # Crear el Blueprint
-    make_blueprint_small(blueprint_name)
+    make_blueprint_small(blueprint_name, package_path)
     
     print(f"Blueprint '{blueprint_name}' creado y guardado en '{package_path}/{blueprint_name}'")

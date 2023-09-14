@@ -11,6 +11,7 @@ if not secuencia_origen or not secuencia_destino:
 else:
     # Copia todos los tracks de la secuencia origen a la secuencia destino
     for track_origen in secuencia_origen.get_master_tracks():
+          print(track_origen.get_display_name())
         track_destino = secuencia_destino.add_master_track(type(track_origen))
 
         # Copia todos los fotogramas de cada track

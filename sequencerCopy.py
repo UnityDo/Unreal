@@ -2,8 +2,8 @@ import unreal
 
 # Obtén las referencias a las secuencias de nivel
 
-secuencia_origen = unreal.LevelSequence.cast(unreal.load_asset('/Game/Cinematics/Takes/2023-09-14/SQ_TestCopy.SQ_TestCopy'))
-secuencia_destino = unreal.LevelSequence.cast(unreal.load_asset('/Game/Cinematics/Takes/2023-09-14/SQ_TestPaste.SQ_TestPaste'))
+secuencia_origen = unreal.LevelSequence.cast(unreal.load_asset('/Game/Sequencer/Test/CopyPaste/SQ_Copy.SQ_Copy'))
+secuencia_destino = unreal.LevelSequence.cast(unreal.load_asset('/Game/Sequencer/Test/SQ_Paste.SQ_Paste'))
 
 # Asegúrate de que ambas secuencias existen
 if not secuencia_origen or not secuencia_destino:
@@ -22,5 +22,8 @@ else:
                 value = key_origen.get_value()
                 key_destino = row_destino.add_key(time)
                 key_destino.set_value(value)
+
+    # Guarda los cambios en la secuencia destino
+    unreal.EditorAssetLibrary.save_loaded_asset(secuencia_destino)
 
     print("Se han copiado todos los tracks y fotogramas.")

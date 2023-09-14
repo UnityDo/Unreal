@@ -3,7 +3,7 @@ import unreal
 # Obtén las referencias a las secuencias de nivel
 
 secuencia_origen = unreal.LevelSequence.cast(unreal.load_asset('/Game/Sequencer/Test/CopyPaste/SQ_Copy.SQ_Copy'))
-secuencia_destino = unreal.LevelSequence.cast(unreal.load_asset('/Game/Sequencer/Test/SQ_Paste.SQ_Paste'))
+secuencia_destino = unreal.LevelSequence.cast(unreal.load_asset('/Game/Sequencer/Test/CopyPaste/SQ_Paste.SQ_Paste'))
 
 # Asegúrate de que ambas secuencias existen
 if not secuencia_origen or not secuencia_destino:

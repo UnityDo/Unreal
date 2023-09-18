@@ -15,4 +15,5 @@ else:
         tracks=binds_origen.get_tracks()
         for track in tracks:
             print(track.get_display_name())
-            secuencia_destino.AddTrack(track)
+            sequencer = unreal.LevelSequenceEditorToolkit(secuencia_destino)
+            sequencer.AddTrack(track)

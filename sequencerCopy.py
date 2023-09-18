@@ -13,7 +13,7 @@ else:
     for binds_origen in binds:
         print(binds_origen.get_display_name())
         tracks=binds_origen.get_tracks()
+        binds_destino=secuencia_destino.add_possessable(binds_origen)
         for track in tracks:
             print(track.get_display_name())
-            sequencer = unreal.LevelSequenceEditorToolkit(secuencia_destino)
-            sequencer.AddTrack(track)
+           

@@ -2,13 +2,18 @@ import unreal
 
 
 # Obtén la referencia al asset
-asset = unreal.load_asset("/Game/Blueprints/Systems/InventorySystem/Items/Clues/Page1/DAP_P_A_1.DAP_P_A_1")
 
-table_id = unreal.Name('/Game/String_Tables/ST_Text.ST_Text')
+asset = unreal.load_asset("/Game/Blueprints/Systems/InventorySystem/Items/Clues/Page1/DAP_P_C_1.DAP_P_C_1")
+
+table_base = unreal.Name("/Game/String_Tables/ST_Text.ST_Text")
 
 
+selected_assets = unreal.EditorUtilityLibrary.get_selected_assets()
 
-
+# Itera sobre los assets seleccionados
+for asset in selected_assets:
+    # Haz algo con cada asset
+    print(asset.get_name())
 
 # Coge el text ya guardado y sacamos el key
 
@@ -16,11 +21,17 @@ texto=asset.get_editor_property('Texto')
 tupla=unreal.TextLibrary.string_table_id_and_key_from_text(texto)
 
 out_table_id, out_key = tupla
+print(table_id)
+print("externa")
+print(out_table_id)
 print(out_key)
-
 # Coge el text ya guardado y sacamos el key
-new_text =unreal.TextLibrary.text_from_string_table(table_id, key)
-asset.set_editor_property('Texto',new_text)
+new_text =unreal.TextLibrary.text_from_string_table(table_base, out_key)
+
+print(new_text)
+asset.set_editor_property("Texto","")
+asset.set_editor_property("Texto",new_text)
 
 # Guarda los cambios en el asset
 unreal.EditorAssetLibrary.save_loaded_asset(asset)
+

@@ -1,30 +1,34 @@
 import unreal
-import pickle
 
 # Obtener el esqueleto seleccionado en el editor
 
-skeleton = unreal.EditorUtilityLibrary.get_selected_assets()[0]
+skel_mesh = unreal.EditorUtilityLibrary.get_selected_assets()[0]
 
-# Crear un diccionario vacío para almacenar la información del esqueleto
-skeleton_data = {}
+
 
 # optiene el modificador
-skeleton_modifier = unreal.SkeletonModifier()
+skeleton_modifier_source = unreal.SkeletonModifier()
+# Establece la malla esquelética
+skeleton_modifier_source.set_skeletal_mesh(skel_mesh)
 
 # Obtener la lista de todos los nombres de los huesos del esqueleto
-bone_names = skeleton_modifier.get_all_bone_names()
+bone_names = skeleton_modifier_source.get_all_bone_names()
+
+# Ruta a la malla esquelética
+mesh_path = "/Game/Mario/Mario_sinpuntos_SkelMesh"
+
+# Carga la malla esquelética
+asset_editor = unreal.EditorAssetLibrary()
+skel_mesh_target = asset_editor.load_asset(mesh_path)
+skeleton_modifier_target = unreal.SkeletonModifier()
+skeleton_modifier_target.set_skeletal_mesh(skel_mesh_target)
+print(bone_names)
 
 # Iterar sobre cada nombre de hueso
 for bone_name in bone_names:
-    # Obtener la transformación del hueso en el espacio del esqueleto
-    bone_transform = skeleton.get_bone_transform(bone_name, unreal.Skeleton.BoneSpace.SKELETON)
-    # Obtener el nombre del hueso padre, si existe
-    parent_bone = skeleton.get_parent_bone(bone_name)
-    # Guardar la información del hueso en el diccionario, usando el nombre del hueso como clave
-    skeleton_data[bone_name] = {"transform": bone_transform, "parent": parent_bone}
+  parent_name=skeleton_modifier.get_parent_name(bone_name)
+  transform=skeleton_modifier.get_bone_transform(bone_name,False)
+  skeleton_modifier_target.add_bone(bone_name, parent_name, transform)
 
-# Abrir un archivo en modo escritura binaria
-with open("C:/Users/Usuario/Documents/Unreal Projects/Adventcode2023/Content/Data/skeleton_data.pkl", "wb") as file:
-    # Serializar el diccionario y guardarlo en el archivo
-    pickle.dump(skeleton_data, file)
+skeleton_modifier_target.commit_skeleton_to_skeletal_mesh()
 
